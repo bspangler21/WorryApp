@@ -1,5 +1,6 @@
 {
 	"name": "worry",
+	"description": "Wellness Organizer for Recording and Reflecting on Yourself",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
