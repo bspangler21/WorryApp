@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import utilStyles from "../styles/utilStyles.module.css";
 import { Worry } from "../types/Worry";
 import { mockWorries } from "../mockData/mockWorry";
+import { mergeStyleSets } from "@fluentui/react";
+
+const classNames = mergeStyleSets({
+	smallTableHeader: {
+		textAlign: "center",
+		width: "300px",
+	},
+});
 
 const Worries = () => {
 	const [worries, setWorries] = useState<Worry[]>([]);
@@ -18,8 +26,8 @@ const Worries = () => {
 
 	return (
 		<>
-			<div className={utilStyles.container}>
-				<table className={utilStyles.table}>
+			<div style={{ display: "flex", justifyContent: "center" }}>
+				<table>
 					<thead>
 						<tr>
 							<th className={utilStyles.tableHeaderWidth}>
@@ -41,6 +49,13 @@ const Worries = () => {
 							<>
 								<tr key={w._id}>
 									<td>{w.title}</td>
+									<td>{w.description}</td>
+									<td className={classNames.smallTableHeader}>
+										{w.dateRecorded.toLocaleDateString()}
+									</td>
+									<td className={classNames.smallTableHeader}>
+										{w.intensity}
+									</td>
 								</tr>
 							</>
 						))}

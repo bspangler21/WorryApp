@@ -33,7 +33,7 @@ const AppBar = styled(MuiAppBar, {
 			easing: theme.transitions.easing.easeOut,
 			duration: theme.transitions.duration.enteringScreen,
 		}),
-		backgroundColor: `#000000`,
+		backgroundColor: `#2b14d9`,
 	}),
 }));
 
@@ -78,6 +78,7 @@ const Header = () => {
 						>
 							<MenuIcon />
 						</IconButton>
+						<button>Add New</button>
 					</Toolbar>
 				</AppBar>
 				<Drawer
