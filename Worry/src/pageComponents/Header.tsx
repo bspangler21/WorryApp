@@ -78,7 +78,8 @@ const Header = () => {
 						>
 							<MenuIcon />
 						</IconButton>
-						<button>Add New</button>
+						<span style={{ width: "80%" }}></span>
+						<button style={{ width: "200px" }}>Add New</button>
 					</Toolbar>
 				</AppBar>
 				<Drawer
