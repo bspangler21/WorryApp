@@ -39,21 +39,25 @@
 }
 
 .tableHeader {
-  /* color: #ffffff; */
-  /* background-color: #000000; */
+ 
   border-color: black;
-  /* border-width: 0px; */
+  
   align-items: center;
   align-content: center;
   max-width: 100%;
   width: 300px;
-  /* padding-right: Calc(100vw - Calc(50vw/2)); */
+ 
 
 
 }
 
 .tableHeaderWidth {
-  width: 100px;
+  width: 300px;
+}
+
+.tableHeaderWidth:hover {
+  width: 300px;
+  cursor: pointer;
 }
 
 .tableHeader:hover {

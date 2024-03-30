@@ -47,9 +47,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const navLinks = [
-	{ path: "/", name: "Home" },
-	{ path: "/golfers", name: "Golfers" },
-	{ path: "/schedule-list", name: "Schedule" },
+	{ path: "/", name: "Worries" },
+	{ path: "/about", name: "About" },
 ];
 
 const Header = () => {
