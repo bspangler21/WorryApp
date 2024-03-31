@@ -47,7 +47,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const navLinks = [
-	{ path: "/", name: "Worries" },
+	{ path: "/worry", name: "Worries" },
 	{ path: "/about", name: "About" },
 ];
 
@@ -78,8 +78,14 @@ const Header = () => {
 						>
 							<MenuIcon />
 						</IconButton>
-						<span style={{ width: "80%" }}></span>
-						<button style={{ width: "200px" }}>Add New</button>
+						{window.location.href.indexOf("worry") > -1 && (
+							<>
+								<span style={{ width: "80%" }}></span>
+								<button style={{ width: "200px" }}>
+									Add New
+								</button>
+							</>
+						)}
 					</Toolbar>
 				</AppBar>
 				<Drawer

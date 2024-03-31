@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
-import utilStyles from "../styles/utilStyles.module.css";
-import { Worry } from "../types/Worry";
-import { mockWorries } from "../mockData/mockWorry";
+import utilStyles from "../../styles/utilStyles.module.css";
+import { Worry } from "../../types/Worry";
+import { mockWorries } from "../../mockData/mockWorry";
 import { mergeStyleSets } from "@fluentui/react";
-
-const apiUrl = "http://localhost:4000/api";
+import { useFetchWorries } from "../../hooks/WorryHooks";
+import { useNavigate } from "react-router-dom";
 
 const classNames = mergeStyleSets({
 	smallTableHeader: {
 		textAlign: "center",
 		width: "300px",
 	},
+	tableRow: {
+		height: "75px",
+		cursor: "pointer",
+	},
 });
 
 const Worries = () => {
+	// const nav = useNavigate();
 	const [worries, setWorries] = useState<Worry[]>([]);
 
+	const { data } = useFetchWorries();
+
 	useEffect(() => {
-		const fetchData = async () => {
-			const response = await fetch(`${apiUrl}/Worry`);
-			const data = await response.json();
-			setWorries(data ?? mockWorries);
-		};
-		fetchData();
-		// setWorries(mockWorries);
-	}, [worries]);
+		setWorries(data ?? mockWorries);
+	}, [data]);
 
 	return (
 		<>
@@ -52,7 +53,7 @@ const Worries = () => {
 					<tbody>
 						{worries.map((w) => (
 							<>
-								<tr key={w._id}>
+								<tr key={w._id} className={classNames.tableRow}>
 									<td>{w.title}</td>
 									<td>{w.description}</td>
 									<td className={classNames.smallTableHeader}>
