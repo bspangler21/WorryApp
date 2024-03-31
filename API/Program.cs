@@ -1,9 +1,11 @@
 using API.Models;
+using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<WorryDatabaseSettings>(builder.Configuration.GetSection("WorryDatabase"));
+builder.Services.AddSingleton<WorryService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
