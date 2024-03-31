@@ -33,7 +33,7 @@ const AppBar = styled(MuiAppBar, {
 			easing: theme.transitions.easing.easeOut,
 			duration: theme.transitions.duration.enteringScreen,
 		}),
-		backgroundColor: `#000000`,
+		backgroundColor: `#2b14d9`,
 	}),
 }));
 
@@ -47,9 +47,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const navLinks = [
-	{ path: "/", name: "Home" },
-	{ path: "/golfers", name: "Golfers" },
-	{ path: "/schedule-list", name: "Schedule" },
+	{ path: "/", name: "Worries" },
+	{ path: "/about", name: "About" },
 ];
 
 const Header = () => {
@@ -79,6 +78,8 @@ const Header = () => {
 						>
 							<MenuIcon />
 						</IconButton>
+						<span style={{ width: "80%" }}></span>
+						<button style={{ width: "200px" }}>Add New</button>
 					</Toolbar>
 				</AppBar>
 				<Drawer
