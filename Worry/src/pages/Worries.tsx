@@ -4,6 +4,8 @@ import { Worry } from "../types/Worry";
 import { mockWorries } from "../mockData/mockWorry";
 import { mergeStyleSets } from "@fluentui/react";
 
+const apiUrl = "http://localhost:4000/api";
+
 const classNames = mergeStyleSets({
 	smallTableHeader: {
 		textAlign: "center",
@@ -15,14 +17,14 @@ const Worries = () => {
 	const [worries, setWorries] = useState<Worry[]>([]);
 
 	useEffect(() => {
-		// const fetchData = async () => {
-		//   const response = await fetch("http://localhost:5000/worries");
-		//   const data = await response.json();
-		//   setWorries(data);
-		// };
-		// fetchData();
-		setWorries(mockWorries);
-	}, [mockWorries]);
+		const fetchData = async () => {
+			const response = await fetch(`${apiUrl}/Worry`);
+			const data = await response.json();
+			setWorries(data ?? mockWorries);
+		};
+		fetchData();
+		// setWorries(mockWorries);
+	}, [worries]);
 
 	return (
 		<>
@@ -40,6 +42,9 @@ const Worries = () => {
 								Date Recorded
 							</th>
 							<th className={utilStyles.tableHeaderWidth}>
+								Date Resolved
+							</th>
+							<th className={utilStyles.tableHeaderWidth}>
 								Intensity
 							</th>
 						</tr>
@@ -51,7 +56,9 @@ const Worries = () => {
 									<td>{w.title}</td>
 									<td>{w.description}</td>
 									<td className={classNames.smallTableHeader}>
-										{w.dateRecorded.toLocaleDateString()}
+										{new Date(
+											w.dateRecorded
+										).toLocaleDateString()}
 									</td>
 									<td className={classNames.smallTableHeader}>
 										{w.intensity}
