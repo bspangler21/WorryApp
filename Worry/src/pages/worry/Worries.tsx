@@ -4,7 +4,6 @@ import { Worry } from "../../types/Worry";
 import { mockWorries } from "../../mockData/mockWorry";
 import { mergeStyleSets } from "@fluentui/react";
 import { useFetchWorries } from "../../hooks/WorryHooks";
-import { useNavigate } from "react-router-dom";
 
 const classNames = mergeStyleSets({
 	smallTableHeader: {
@@ -61,6 +60,28 @@ const Worries = () => {
 											w.dateRecorded
 										).toLocaleDateString()}
 									</td>
+									{w.resolved ? (
+										<>
+											<td
+												className={
+													classNames.smallTableHeader
+												}
+											>
+												{w.dateResolved &&
+													new Date(
+														w.dateResolved
+													).toLocaleDateString()}
+											</td>
+										</>
+									) : (
+										<td
+											className={
+												classNames.smallTableHeader
+											}
+										>
+											{"Unresolved"}
+										</td>
+									)}
 									<td className={classNames.smallTableHeader}>
 										{w.intensity}
 									</td>
