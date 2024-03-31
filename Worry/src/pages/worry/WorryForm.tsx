@@ -78,7 +78,7 @@ const DateForm = ({ worry, submitted, isEdit }: Args) => {
 				<div>
 					<TextField
 						label="Title"
-						placeholder="Worry title"
+						// placeholder="Worry title"
 						required
 						value={isEdit ? worry.title : worryState.title}
 						onChange={(event, newValue) => {
@@ -95,6 +95,7 @@ const DateForm = ({ worry, submitted, isEdit }: Args) => {
 							isEdit ? worry.description : worryState.description
 						}
 						multiline
+            rows={4}
 						onChange={(event, newValue) => {
 							setWorryState({
 								...worryState,
