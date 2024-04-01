@@ -27,7 +27,6 @@ const Worries = () => {
 		setWorries(data ?? mockWorries);
 	}, [data]);
 
-	console.log("worries", worries);
 
 	return (
 		<>
@@ -60,11 +59,23 @@ const Worries = () => {
 									<tr
 										key={w.id}
 										className={classNames.tableRow}
-										onClick={() => nav(`/worry/edit/${w.id}`)}
+										onClick={() =>
+											nav(`/worry/edit/${w.id}`)
+										}
 									>
 										<td>{w.title}</td>
-										<td>{w.description}</td>
-										<td className={classNames.smallTableHeader}>
+										<td
+											style={{
+												textAlign: "center",
+											}}
+										>
+											{w.description}
+										</td>
+										<td
+											className={
+												classNames.smallTableHeader
+											}
+										>
 											{new Date(
 												w.dateRecorded
 											).toLocaleDateString()}
@@ -91,7 +102,11 @@ const Worries = () => {
 												{"Unresolved"}
 											</td>
 										)}
-										<td className={classNames.smallTableHeader}>
+										<td
+											className={
+												classNames.smallTableHeader
+											}
+										>
 											{w.intensity}
 										</td>
 									</tr>

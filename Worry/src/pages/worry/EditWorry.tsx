@@ -37,8 +37,6 @@ const EditWorry = () => {
 	const { data, status, isSuccess } = useFetchWorry(worryId);
 	const updateWorryMutation = useUpdateWorry();
 
-	console.log("data", data);
-
 	if (!isSuccess) return <ApiStatus status={status} />;
 
 	worryData = data ?? getWorryById(worryId, worriesData ?? []);
@@ -46,8 +44,6 @@ const EditWorry = () => {
 	// useEffect(() => {
 	// 	worryData = data ?? getWorryById(worryId, mockWorrys);
 	// }, [data]);
-
-	console.log("worryData", worryData);
 
 	const worry: Worry = {
 		id: worryData.id,
