@@ -1,5 +1,5 @@
 export type Worry = {
-	_id?: string;
+	id?: string;
 	title: string;
 	description?: string;
 	symptoms?: string;

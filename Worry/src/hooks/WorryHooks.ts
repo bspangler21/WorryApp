@@ -13,9 +13,9 @@ export const useFetchWorries = () => {
 	});
 };
 
-export const useFetchWorry = (_id: string) => {
-	return useQuery<Worry>(["worry", _id], () => {
-		return fetch(`${apiURL}/Worry/${_id}`).then((res) => res.json());
+export const useFetchWorry = (id: string) => {
+	return useQuery<Worry>(["worry", id], () => {
+		return fetch(`${apiURL}/Worry/${id}`).then((res) => res.json());
 	});
 };
 
@@ -47,7 +47,7 @@ export const useUpdateWorry = () => {
 	const nav = useNavigate();
 	// Will not work if golferId not included at the end of the URL
 	return useMutation<AxiosResponse, AxiosError<Problem>, Worry>(
-		(w) => axios.put(`${apiURL}/Worry/${w._id}`, w),
+		(w) => axios.put(`${apiURL}/Worry/${w.id}`, w),
 		{
 			onSuccess: () => {
 				queryClient.invalidateQueries("worry");
@@ -62,7 +62,7 @@ export const useDeleteWorry = () => {
 	const queryClient = useQueryClient();
 	const nav = useNavigate();
 	return useMutation<AxiosResponse, AxiosError<Problem>, Worry>(
-		(w) => axios.delete(`${apiURL}/Worry/${w._id}`),
+		(w) => axios.delete(`${apiURL}/Worry/${w.id}`),
 		{
 			onSuccess: () => {
 				queryClient.invalidateQueries("worry");

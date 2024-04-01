@@ -4,6 +4,7 @@ import { Worry } from "../../types/Worry";
 import { mockWorries } from "../../mockData/mockWorry";
 import { mergeStyleSets } from "@fluentui/react";
 import { useFetchWorries } from "../../hooks/WorryHooks";
+import { useNavigate } from "react-router-dom";
 
 const classNames = mergeStyleSets({
 	smallTableHeader: {
@@ -17,7 +18,7 @@ const classNames = mergeStyleSets({
 });
 
 const Worries = () => {
-	// const nav = useNavigate();
+	const nav = useNavigate();
 	const [worries, setWorries] = useState<Worry[]>([]);
 
 	const { data } = useFetchWorries();
@@ -25,6 +26,8 @@ const Worries = () => {
 	useEffect(() => {
 		setWorries(data ?? mockWorries);
 	}, [data]);
+
+	console.log("worries", worries);
 
 	return (
 		<>
@@ -50,44 +53,51 @@ const Worries = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{worries.map((w) => (
-							<>
-								<tr key={w._id} className={classNames.tableRow}>
-									<td>{w.title}</td>
-									<td>{w.description}</td>
-									<td className={classNames.smallTableHeader}>
-										{new Date(
-											w.dateRecorded
-										).toLocaleDateString()}
-									</td>
-									{w.resolved ? (
-										<>
+						{worries.map((w) => {
+							console.log(w);
+							return (
+								<>
+									<tr
+										key={w.id}
+										className={classNames.tableRow}
+										onClick={() => nav(`/worry/edit/${w.id}`)}
+									>
+										<td>{w.title}</td>
+										<td>{w.description}</td>
+										<td className={classNames.smallTableHeader}>
+											{new Date(
+												w.dateRecorded
+											).toLocaleDateString()}
+										</td>
+										{w.resolved ? (
+											<>
+												<td
+													className={
+														classNames.smallTableHeader
+													}
+												>
+													{w.dateResolved &&
+														new Date(
+															w.dateResolved
+														).toLocaleDateString()}
+												</td>
+											</>
+										) : (
 											<td
 												className={
 													classNames.smallTableHeader
 												}
 											>
-												{w.dateResolved &&
-													new Date(
-														w.dateResolved
-													).toLocaleDateString()}
+												{"Unresolved"}
 											</td>
-										</>
-									) : (
-										<td
-											className={
-												classNames.smallTableHeader
-											}
-										>
-											{"Unresolved"}
+										)}
+										<td className={classNames.smallTableHeader}>
+											{w.intensity}
 										</td>
-									)}
-									<td className={classNames.smallTableHeader}>
-										{w.intensity}
-									</td>
-								</tr>
-							</>
-						))}
+									</tr>
+								</>
+							);
+						})}
 					</tbody>
 				</table>
 			</div>

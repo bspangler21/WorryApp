@@ -60,7 +60,7 @@ type Args = {
 	isEdit: boolean;
 };
 
-const DateForm = ({ worry, submitted, isEdit }: Args) => {
+const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 	const [worryState, setWorryState] = useState({ ...worry });
 
 	const onSubmit: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -95,7 +95,7 @@ const DateForm = ({ worry, submitted, isEdit }: Args) => {
 							isEdit ? worry.description : worryState.description
 						}
 						multiline
-            rows={4}
+						rows={4}
 						onChange={(event, newValue) => {
 							setWorryState({
 								...worryState,
@@ -136,4 +136,4 @@ const DateForm = ({ worry, submitted, isEdit }: Args) => {
 	);
 };
 
-export default DateForm;
+export default WorryForm;
