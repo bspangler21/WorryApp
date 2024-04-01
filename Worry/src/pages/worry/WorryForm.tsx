@@ -1,4 +1,5 @@
 import {
+	Checkbox,
 	DatePicker,
 	DefaultButton,
 	ITheme,
@@ -130,7 +131,18 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						}}
 						className={classNames.dateField}
 					/>
-					{isEdit && (
+					<br></br>
+					<Checkbox
+						className={classNames.regularTextField}
+						label="Resolved?"
+						onChange={() =>
+							setWorryState({
+								...worryState,
+								resolved: !worryState.resolved,
+							})
+						}
+					/>
+					{worryState.resolved && (
 						<DatePicker
 							label="Date Resolved"
 							placeholder="Select a date..."
