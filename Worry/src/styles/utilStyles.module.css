@@ -52,7 +52,7 @@
 }
 
 .tableHeaderWidth {
-  width: 300px;
+  width: 200px;
 }
 
 .tableHeaderWidth:hover {
@@ -60,14 +60,7 @@
   cursor: pointer;
 }
 
-.tableHeader:hover {
-  /* color: rgb(225, 219, 219); */
-  /* background-color: #000000; */
-  /* border-color: #000000; */
-  /* align-items: center; */
-  /* align-content: center; */
 
-}
 
 .button {
   color: #000000;

@@ -2,7 +2,7 @@ import { Worry } from "../types/Worry";
 
 export const mockWorries: Worry[] = [
 	{
-		_id: "6607b0733071665202c2f986",
+		id: "6607b0733071665202c2f986",
 		title: "Anxious about not getting enough done at work.",
 		description: "",
 		symptoms: "Feeling a weight on my chest",
