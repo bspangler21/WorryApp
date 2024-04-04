@@ -135,6 +135,7 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 					<Checkbox
 						className={classNames.regularTextField}
 						label="Resolved?"
+						defaultChecked={worryState.resolved}
 						onChange={() =>
 							setWorryState({
 								...worryState,
@@ -146,13 +147,17 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						<DatePicker
 							label="Date Resolved"
 							placeholder="Select a date..."
-							value={worryState.dateResolved ?? undefined}
+							value={
+								worryState.dateResolved &&
+								new Date(worryState.dateResolved)
+							}
 							onSelectDate={(date) => {
 								setWorryState({
 									...worryState,
-									dateResolved: date
-										? new Date(date)
-										: undefined,
+									dateResolved:
+										date && worryState.resolved
+											? new Date(date)
+											: undefined,
 								});
 							}}
 							className={classNames.dateField}

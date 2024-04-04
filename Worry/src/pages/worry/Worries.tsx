@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import utilStyles from "../../styles/utilStyles.module.css";
 import { Worry } from "../../types/Worry";
 import { mockWorries } from "../../mockData/mockWorry";
-import { mergeStyleSets } from "@fluentui/react";
-import { useFetchWorries } from "../../hooks/WorryHooks";
+import { FontIcon, mergeStyleSets, mergeStyles } from "@fluentui/react";
+import { useDeleteWorry, useFetchWorries } from "../../hooks/WorryHooks";
 import { useNavigate } from "react-router-dom";
 
 const classNames = mergeStyleSets({
@@ -17,16 +17,32 @@ const classNames = mergeStyleSets({
 	},
 });
 
+const iconClass = mergeStyles({
+	fontSize: 25,
+	height: 25,
+	width: 25,
+	margin: "0 5px",
+});
+
 const Worries = () => {
 	const nav = useNavigate();
 	const [worries, setWorries] = useState<Worry[]>([]);
 
 	const { data } = useFetchWorries();
+	const deleteWorryMutation = useDeleteWorry();
 
 	useEffect(() => {
 		setWorries(data ?? mockWorries);
 	}, [data]);
 
+	const worryHeaders = [
+		"Title",
+		"Description",
+		"Date Recorded",
+		"Date Resolved",
+		"Intensity",
+		"",
+	];
 
 	return (
 		<>
@@ -49,6 +65,7 @@ const Worries = () => {
 							<th className={utilStyles.tableHeaderWidth}>
 								Intensity
 							</th>
+							<th className={utilStyles.tableHeaderWidth}></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -108,6 +125,25 @@ const Worries = () => {
 											}
 										>
 											{w.intensity}
+										</td>
+										<td
+											onClick={() => {
+												if (
+													window.confirm(
+														"Are you sure you want to delete this entry?"
+													)
+												) {
+													deleteWorryMutation.mutate(
+														w
+													);
+												}
+											}}
+										>
+											<FontIcon
+												aria-label="Delete"
+												iconName="Delete"
+												className={iconClass}
+											/>
 										</td>
 									</tr>
 								</>
