@@ -3,6 +3,7 @@ import {
 	DatePicker,
 	DefaultButton,
 	ITheme,
+	SpinButton,
 	TextField,
 	ThemeProvider,
 	createTheme,
@@ -42,6 +43,12 @@ const classNames = mergeStyleSets({
 		// overflowY: "scroll",
 	},
 	dateField: {
+		width: "500px",
+		display: "block",
+		marginLeft: "auto",
+		marginRight: "auto",
+	},
+	spinButton: {
 		width: "500px",
 		display: "block",
 		marginLeft: "auto",
@@ -118,6 +125,36 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						}}
 						className={classNames.largeTextField}
 					></TextField>
+					<TextField
+						label="Judgments"
+						value={worryState.judgments}
+						multiline
+						rows={4}
+						onChange={(event, newValue) => {
+							console.log("newValue", newValue);
+							setWorryState({
+								...worryState,
+								judgments: newValue,
+							});
+						}}
+						className={classNames.largeTextField}
+					></TextField>
+					<SpinButton
+						label="Instensity"
+						className={classNames.spinButton}
+						defaultValue="0"
+						min={0}
+						max={10}
+						step={1}
+						incrementButtonAriaLabel="Increase value by 1"
+						decrementButtonAriaLabel="Decrease value by 1"
+						onChange={(event, newValue) => {
+							setWorryState({
+								...worryState,
+								intensity: Number(newValue) ?? 0,
+							});
+						}}
+					/>
 					<DatePicker
 						label="Date Recorded"
 						placeholder="Select a date..."
