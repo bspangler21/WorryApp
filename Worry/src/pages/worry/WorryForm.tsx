@@ -101,7 +101,7 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						label="Description"
 						value={worryState.description}
 						multiline
-						rows={4}
+						rows={3}
 						onChange={(event, newValue) => {
 							console.log("newValue", newValue);
 							setWorryState({
@@ -126,10 +126,29 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						className={classNames.largeTextField}
 					></TextField>
 					<TextField
+						label="Coping Strategies"
+						value={worryState.copingStrategies}
+						multiline
+						rows={3}
+						onChange={(event, newValue) => {
+							console.log("newValue", newValue);
+							setWorryState({
+								...worryState,
+								copingStrategies: newValue,
+							});
+						}}
+						className={classNames.largeTextField}
+					></TextField>
+					<TextField
 						label="Judgments"
 						value={worryState.judgments}
 						multiline
-						rows={4}
+						rows={
+							worryState.judgments &&
+							worryState.judgments?.length > 200
+								? 4
+								: 3
+						}
 						onChange={(event, newValue) => {
 							console.log("newValue", newValue);
 							setWorryState({
@@ -139,22 +158,22 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						}}
 						className={classNames.largeTextField}
 					></TextField>
-					<SpinButton
-						label="Instensity"
-						className={classNames.spinButton}
-						defaultValue="0"
-						min={0}
-						max={10}
-						step={1}
-						incrementButtonAriaLabel="Increase value by 1"
-						decrementButtonAriaLabel="Decrease value by 1"
+					<TextField
+						label="Intensity"
+						required
+						value={
+							isEdit
+								? worry.intensity.toString()
+								: worryState.intensity.toString()
+						}
 						onChange={(event, newValue) => {
 							setWorryState({
 								...worryState,
 								intensity: Number(newValue) ?? 0,
 							});
 						}}
-					/>
+						className={classNames.regularTextField}
+					></TextField>
 					<DatePicker
 						label="Date Recorded"
 						placeholder="Select a date..."

@@ -9,9 +9,17 @@ import { WorryTable } from "../../pageComponents/WorryTable";
 import { TableHeader } from "../../types/TableHeader";
 
 const classNames = mergeStyleSets({
-	smallTableHeader: {
+	regularCenterTableHeader: {
 		textAlign: "center",
 		width: "300px",
+	},
+	regularLeftTableHeader: {
+		textAlign: "start",
+		width: "350px",
+	},
+	smallTableHeader: {
+		textAlign: "center",
+		width: "200px",
 	},
 	tableRow: {
 		height: "75px",
@@ -45,71 +53,77 @@ const Worries = () => {
 		{ name: "Intensity" },
 	];
 
-	const elements = worries.map((w) => {
-		return (
-			<>
-				<tr key={w.id} className={classNames.tableRow}>
-					<td>{w.title}</td>
-					<td
-						style={{
-							textAlign: "center",
-						}}
-					>
-						{w.description}
-					</td>
-					<td
-						className={classNames.smallTableHeader}
-						onClick={() => nav(`/worry/edit/${w.id}`)}
-					>
-						{new Date(w.dateRecorded).toLocaleDateString()}
-					</td>
-					{w.resolved ? (
-						<>
-							<td
-								className={classNames.smallTableHeader}
-								onClick={() => nav(`/worry/edit/${w.id}`)}
-							>
-								{w.dateResolved &&
-									new Date(
-										w.dateResolved
-									).toLocaleDateString()}
-							</td>
-						</>
-					) : (
+	const elements = worries
+		.sort((a, b) => (a.dateRecorded > b.dateRecorded ? 1 : -1))
+		.map((w) => {
+			return (
+				<>
+					<tr key={w.id} className={classNames.tableRow}>
+						<td
+							onClick={() => nav(`/worry/edit/${w.id}`)}
+							className={classNames.regularLeftTableHeader}
+						>
+							{w.title}
+						</td>
+						<td
+							className={classNames.regularLeftTableHeader}
+							onClick={() => nav(`/worry/edit/${w.id}`)}
+						>
+							{w.description}
+						</td>
 						<td
 							className={classNames.smallTableHeader}
 							onClick={() => nav(`/worry/edit/${w.id}`)}
 						>
-							{"Unresolved"}
+							{new Date(w.dateRecorded).toLocaleDateString()}
 						</td>
-					)}
-					<td
-						className={classNames.smallTableHeader}
-						onClick={() => nav(`/worry/edit/${w.id}`)}
-					>
-						{w.intensity}
-					</td>
-					<td
-						onClick={() => {
-							if (
-								window.confirm(
-									"Are you sure you want to delete this entry?"
-								)
-							) {
-								deleteWorryMutation.mutate(w);
-							}
-						}}
-					>
-						<FontIcon
-							aria-label="Delete"
-							iconName="Delete"
-							className={iconClass}
-						/>
-					</td>
-				</tr>
-			</>
-		);
-	});
+						{w.resolved ? (
+							<>
+								<td
+									className={classNames.smallTableHeader}
+									onClick={() => nav(`/worry/edit/${w.id}`)}
+								>
+									{w.dateResolved &&
+										new Date(
+											w.dateResolved
+										).toLocaleDateString()}
+								</td>
+							</>
+						) : (
+							<td
+								className={classNames.smallTableHeader}
+								onClick={() => nav(`/worry/edit/${w.id}`)}
+							>
+								{"Unresolved"}
+							</td>
+						)}
+						<td
+							className={classNames.smallTableHeader}
+							onClick={() => nav(`/worry/edit/${w.id}`)}
+						>
+							{w.intensity}
+						</td>
+						<td
+							onClick={() => {
+								if (
+									window.confirm(
+										"Are you sure you want to delete this entry?"
+									)
+								) {
+									deleteWorryMutation.mutate(w);
+								}
+							}}
+						>
+							<FontIcon
+								aria-label="Delete"
+								iconName="Delete"
+								className={iconClass}
+							/>
+						</td>
+					</tr>
+				</>
+			);
+		});
 
 	return <WorryTable headers={worryHeaders} elements={elements} />;
 };
