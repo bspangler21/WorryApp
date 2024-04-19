@@ -6,6 +6,9 @@ import {
 	Dropdown,
 	FontIcon,
 	IDropdownOption,
+	ITheme,
+	ThemeProvider,
+	createTheme,
 	mergeStyleSets,
 	mergeStyles,
 } from "@fluentui/react";
@@ -13,7 +16,9 @@ import { useDeleteWorry, useFetchWorries } from "../../hooks/WorryHooks";
 import { useNavigate } from "react-router-dom";
 import { WorryTable } from "../../pageComponents/WorryTable";
 import { TableHeader } from "../../types/TableHeader";
-import { set } from "date-fns";
+import { fluentPalette } from "../../util/fluentPalette";
+
+const fluentTheme: ITheme = createTheme({ palette: fluentPalette });
 
 const classNames = mergeStyleSets({
 	regularCenterTableHeader: {
@@ -32,9 +37,19 @@ const classNames = mergeStyleSets({
 		height: "75px",
 		cursor: "pointer",
 	},
-	dropdown: {
+	dropdownLight: {
 		width: "300px",
 		margin: "20px",
+		padding: "10px",
+		backgroundColor: "#ffffff",
+		color: "#000000",
+	},
+	dropdownDark: {
+		width: "300px",
+		margin: "20px",
+		padding: "10px",
+		backgroundColor: "#000000",
+		color: "#ffffff",
 	},
 });
 
@@ -50,6 +65,16 @@ const options: IDropdownOption[] = [
 	{ key: "lastMonth", text: "Last month" },
 	{ key: "all", text: "All" },
 ];
+
+const isDarkMode =
+	window.matchMedia &&
+	window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+if (isDarkMode) {
+	console.log("Dark mode is on");
+} else {
+	console.log("Light mode is on");
+}
 
 const Worries = () => {
 	const nav = useNavigate();
@@ -184,19 +209,24 @@ const Worries = () => {
 		});
 
 	return (
+		// <ThemeProvider theme={fluentTheme}>
 		<>
 			<div>
 				<Dropdown
-					placeholder="Filter worries"
 					label="Filter by date"
 					options={options}
-					className={classNames.dropdown}
+					className={
+						isDarkMode
+							? classNames.dropdownDark
+							: classNames.dropdownLight
+					}
 					// selectedKey={}
 					onChange={filterWorries}
 				/>
 			</div>
 			<WorryTable headers={worryHeaders} elements={elements} />
 		</>
+		// </ThemeProvider>
 	);
 };
 
