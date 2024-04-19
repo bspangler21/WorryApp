@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 import utilStyles from "../../styles/utilStyles.module.css";
 import { Worry } from "../../types/Worry";
 import { mockWorries } from "../../mockData/mockWorry";
-import { FontIcon, mergeStyleSets, mergeStyles } from "@fluentui/react";
+import {
+	Dropdown,
+	FontIcon,
+	IDropdownOption,
+	mergeStyleSets,
+	mergeStyles,
+} from "@fluentui/react";
 import { useDeleteWorry, useFetchWorries } from "../../hooks/WorryHooks";
 import { useNavigate } from "react-router-dom";
 import { WorryTable } from "../../pageComponents/WorryTable";
 import { TableHeader } from "../../types/TableHeader";
+import { set } from "date-fns";
 
 const classNames = mergeStyleSets({
 	regularCenterTableHeader: {
@@ -25,6 +32,10 @@ const classNames = mergeStyleSets({
 		height: "75px",
 		cursor: "pointer",
 	},
+	dropdown: {
+		width: "300px",
+		margin: "20px",
+	},
 });
 
 const iconClass = mergeStyles({
@@ -34,16 +45,61 @@ const iconClass = mergeStyles({
 	margin: "0 5px",
 });
 
+const options: IDropdownOption[] = [
+	{ key: "currentMonth", text: "Current month" },
+	{ key: "lastMonth", text: "Last month" },
+	{ key: "all", text: "All" },
+];
+
 const Worries = () => {
 	const nav = useNavigate();
 	const [worries, setWorries] = useState<Worry[]>([]);
+	const [worriesToDisplay, setWorriesToDisplay] = useState<Worry[]>([]);
 
 	const { data } = useFetchWorries();
 	const deleteWorryMutation = useDeleteWorry();
 
 	useEffect(() => {
 		setWorries(data ?? mockWorries);
+		setWorriesToDisplay(data ?? mockWorries);
 	}, [data]);
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const filterWorries = (
+		event: React.FormEvent<HTMLDivElement>,
+		item: IDropdownOption
+	): void => {
+		if (!item) {
+			return;
+		}
+		switch (item.key) {
+			case "currentMonth":
+				setWorriesToDisplay(
+					worries.filter(
+						(w) =>
+							new Date(w.dateRecorded).getMonth() ===
+								new Date().getMonth() &&
+							new Date(w.dateRecorded).getFullYear() ===
+								new Date().getFullYear()
+					)
+				);
+				break;
+			case "lastMonth":
+				setWorriesToDisplay(
+					worries.filter(
+						(w) =>
+							new Date(w.dateRecorded).getMonth() ===
+								new Date().getMonth() - 1 &&
+							new Date(w.dateRecorded).getFullYear() ===
+								new Date().getFullYear()
+					)
+				);
+				break;
+			case "all":
+				setWorriesToDisplay(worries);
+				break;
+		}
+	};
 
 	const worryHeaders: TableHeader[] = [
 		{ name: "Title" },
@@ -53,7 +109,7 @@ const Worries = () => {
 		{ name: "Intensity" },
 	];
 
-	const elements = worries
+	const elements = worriesToDisplay
 		.sort((a, b) => (a.dateRecorded > b.dateRecorded ? 1 : -1))
 		.map((w) => {
 			return (
@@ -69,7 +125,9 @@ const Worries = () => {
 							className={classNames.regularLeftTableHeader}
 							onClick={() => nav(`/worry/edit/${w.id}`)}
 						>
-							{w.description}
+							{w.description && w.description?.length > 125
+								? w.description?.substring(0, 125) + "..."
+								: w.description}
 						</td>
 						<td
 							className={classNames.smallTableHeader}
@@ -125,7 +183,21 @@ const Worries = () => {
 			);
 		});
 
-	return <WorryTable headers={worryHeaders} elements={elements} />;
+	return (
+		<>
+			<div>
+				<Dropdown
+					placeholder="Filter worries"
+					label="Filter by date"
+					options={options}
+					className={classNames.dropdown}
+					// selectedKey={}
+					onChange={filterWorries}
+				/>
+			</div>
+			<WorryTable headers={worryHeaders} elements={elements} />
+		</>
+	);
 };
 
 export default Worries;
