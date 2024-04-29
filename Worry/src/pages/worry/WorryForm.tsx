@@ -112,34 +112,6 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						className={classNames.largeTextField}
 					></TextField>
 					<TextField
-						label="Symptoms"
-						value={worryState.symptoms}
-						multiline
-						rows={4}
-						onChange={(event, newValue) => {
-							console.log("newValue", newValue);
-							setWorryState({
-								...worryState,
-								symptoms: newValue,
-							});
-						}}
-						className={classNames.largeTextField}
-					></TextField>
-					<TextField
-						label="Coping Strategies"
-						value={worryState.copingStrategies}
-						multiline
-						rows={3}
-						onChange={(event, newValue) => {
-							console.log("newValue", newValue);
-							setWorryState({
-								...worryState,
-								copingStrategies: newValue,
-							});
-						}}
-						className={classNames.largeTextField}
-					></TextField>
-					<TextField
 						label="Judgments"
 						value={worryState.judgments}
 						multiline
@@ -187,38 +159,6 @@ const WorryForm = ({ worry, submitted, isEdit }: Args) => {
 						}}
 						className={classNames.dateField}
 					/>
-					<br></br>
-					<Checkbox
-						className={classNames.regularTextField}
-						label="Resolved?"
-						defaultChecked={worryState.resolved}
-						onChange={() =>
-							setWorryState({
-								...worryState,
-								resolved: !worryState.resolved,
-							})
-						}
-					/>
-					{worryState.resolved && (
-						<DatePicker
-							label="Date Resolved"
-							placeholder="Select a date..."
-							value={
-								worryState.dateResolved &&
-								new Date(worryState.dateResolved)
-							}
-							onSelectDate={(date) => {
-								setWorryState({
-									...worryState,
-									dateResolved:
-										date && worryState.resolved
-											? new Date(date)
-											: undefined,
-								});
-							}}
-							className={classNames.dateField}
-						/>
-					)}
 					<br></br>
 					<br></br>
 					<DefaultButton
