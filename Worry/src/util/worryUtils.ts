@@ -1,9 +1,9 @@
-import { mockWorries } from "../mockData/mockWorry";
+// import { mockWorries } from "../mockData/mockWorry";
 import { Worry } from "../types/Worry";
 
 export function getWorryById(id: string, allWorrys: Worry[]): Worry {
 	// const { data: worryData } = useFetchWorrys();
-	const worry: Worry[] = allWorrys ?? mockWorries;
+	const worry: Worry[] = allWorrys ?? [];
 	const worryDetail: Worry = {} as Worry;
 
 	if (worry) {

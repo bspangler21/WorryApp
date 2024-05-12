@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import utilStyles from "../../styles/utilStyles.module.css";
 import { Worry } from "../../types/Worry";
-import { mockWorries } from "../../mockData/mockWorry";
+
 import {
+	DefaultButton,
 	Dropdown,
 	FontIcon,
 	IDropdownOption,
@@ -17,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { WorryTable } from "../../pageComponents/WorryTable";
 import { TableHeader } from "../../types/TableHeader";
 import { fluentPalette } from "../../util/fluentPalette";
+import { saveAs } from "file-saver";
 
 const fluentTheme: ITheme = createTheme({ palette: fluentPalette });
 
@@ -76,6 +78,9 @@ if (isDarkMode) {
 	console.log("Light mode is on");
 }
 
+let csvContent: string =
+	"Title,Description,Judgments,Date Recorded,Intensity\n";
+
 const Worries = () => {
 	const nav = useNavigate();
 	const [worries, setWorries] = useState<Worry[]>([]);
@@ -85,19 +90,40 @@ const Worries = () => {
 	const deleteWorryMutation = useDeleteWorry();
 
 	useEffect(() => {
-		setWorries(data ?? mockWorries);
-		setWorriesToDisplay(data ?? mockWorries);
+		// setWorries(data ?? mockWorries);
+		// setWorriesToDisplay(data ?? mockWorries);
+		setWorries(data ?? []);
+		setWorriesToDisplay(data ?? []);
 	}, [data]);
+
+	const downloadWorries = () => {
+		// const element = document.createElement("a");
+		// const file = new Blob([JSON.stringify(worries)], {
+		// 	type: "text/plain",
+		// });
+		// element.href = URL.createObjectURL(file);
+		// element.download = "worries.json";
+		// document.body.appendChild(element); // Required for this to work in FireFox
+		// element.click();
+		worries.forEach((w) => {
+			csvContent += `${w.title},${w.description},${w.judgments},${w.dateRecorded},${w.intensity}\n`;
+		});
+		const blob = new Blob([csvContent], {
+			type: "text/csv;charset=utf-8;",
+		});
+		saveAs(blob, "worries.csv");
+	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const filterWorries = (
 		event: React.FormEvent<HTMLDivElement>,
-		item: IDropdownOption
+		option: IDropdownOption | undefined,
+		index?: number | undefined
 	): void => {
-		if (!item) {
+		if (!option) {
 			return;
 		}
-		switch (item.key) {
+		switch (option?.key) {
 			case "currentMonth":
 				setWorriesToDisplay(
 					worries.filter(
@@ -222,6 +248,10 @@ const Worries = () => {
 					}
 					// selectedKey={}
 					onChange={filterWorries}
+				/>
+				<DefaultButton
+					text="Download Worries"
+					onClick={downloadWorries}
 				/>
 			</div>
 			<WorryTable headers={worryHeaders} elements={elements} />
