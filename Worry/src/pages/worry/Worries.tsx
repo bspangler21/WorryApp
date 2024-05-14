@@ -106,12 +106,19 @@ const Worries = () => {
 		// document.body.appendChild(element); // Required for this to work in FireFox
 		// element.click();
 		worries.forEach((w) => {
-			csvContent += `${w.title},${w.description},${w.judgments},${w.dateRecorded},${w.intensity}\n`;
+			const description = w.description
+				?.replace(/(\r\n|\n|\r)/gm, " ") // replace line breaks with a space
+				.replace(/,/g, " "); // replace all commas with a space
+			const judgment = w.judgments
+				?.replace(/(\r\n|\n|\r)/gm, " ") // replace line breaks with a space
+				.replace(/,/g, " "); // replace all commas with a space
+			const dateRecorded = new Date(w.dateRecorded).toLocaleDateString();
+			csvContent += `${w.title},${description},${judgment},${dateRecorded},${w.intensity}\n`;
 		});
 		const blob = new Blob([csvContent], {
 			type: "text/csv;charset=utf-8;",
 		});
-		saveAs(blob, "worries.csv");
+		saveAs(blob, `Worries ${new Date().toLocaleDateString()}.csv`);
 	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
