@@ -16,6 +16,7 @@ function App() {
 				<Route path="/about" Component={About}></Route>
 				<Route path="/add-worry" Component={AddWorry}></Route>
 				<Route path="/worry/edit/:id" Component={EditWorry}></Route>
+				<Route path="/authenticate" Component={Worries}></Route>
 			</Routes>
 			<Footer />
 		</BrowserRouter>
