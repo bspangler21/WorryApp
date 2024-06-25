@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<WorryDatabaseSettings>(builder.Configuration.GetSection("WorryDatabase"));
 builder.Services.AddSingleton<WorryService>();
 
+builder.Services.Configure<UserDatabaseSettings>(builder.Configuration.GetSection("UserDatabase"));
+builder.Services.AddSingleton<UserService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

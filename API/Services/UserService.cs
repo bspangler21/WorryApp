@@ -31,6 +31,13 @@ namespace API.Services
             return await user.FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetUserByUsernameAsync(string username)
+        {
+            var user = await _userCollection.FindAsync(u => u.username == username);
+
+            return await user.FirstOrDefaultAsync();
+        }
+
         public async Task CreateAsync(User newUser)
         {
             await _userCollection.InsertOneAsync(newUser);
