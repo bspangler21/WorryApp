@@ -50,6 +50,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const navLinks = [
 	{ path: "/worry", name: "Worries" },
 	{ path: "/about", name: "About" },
+	{ path: "/authenticate", name: "Login" },
 ];
 
 const Header = () => {
