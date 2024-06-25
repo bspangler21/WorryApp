@@ -6,6 +6,7 @@ import Worries from "./pages/worry/Worries";
 import About from "./pages/About";
 import AddWorry from "./pages/worry/AddWorry";
 import EditWorry from "./pages/worry/EditWorry";
+import { Authenticate } from "./pages/Authenticate";
 
 function App() {
 	return (
@@ -16,7 +17,7 @@ function App() {
 				<Route path="/about" Component={About}></Route>
 				<Route path="/add-worry" Component={AddWorry}></Route>
 				<Route path="/worry/edit/:id" Component={EditWorry}></Route>
-				<Route path="/authenticate" Component={Worries}></Route>
+				<Route path="/authenticate" Component={Authenticate}></Route>
 			</Routes>
 			<Footer />
 		</BrowserRouter>
