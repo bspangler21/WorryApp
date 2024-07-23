@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
 
 namespace API.Controllers
 {
@@ -45,15 +46,31 @@ namespace API.Controllers
             var user = await _userService.GetUserByUsernameAsync(newUser.username);
             if (user != null && user.password == newUser.password)
             {
-                var token = new JwtSecurityToken(
-                    expires: DateTime.UtcNow.AddDays(2)
-                );
-                var newToken = new JwtSecurityTokenHandler().WriteToken(token);
-                return Ok(new {Token = newToken});
+                // Create a list of claims
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id), // Assuming 'Id' is a property of your User model
+            new Claim(ClaimTypes.Name, user.username)
+        };
+
+                // Create a new JWT token
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.UtcNow.AddDays(2),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("9F86D081884C7D659A2FEAA0C55AD015A3BF4F1AD2F14898B95B926B7A20745E")), SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var newToken = tokenHandler.WriteToken(token);
+
+                return Ok(new { Token = newToken });
             }
 
             return Unauthorized();
         }
+
 
         [Authorize]
         [HttpPut("{id:length(24)}")]
