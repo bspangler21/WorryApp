@@ -24,6 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<List<User>> Get() => await _userService.GetUserAsync();
 
+        [Authorize]
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<User>> Get(string id) => await _userService.GetUserByIdAsync(id);
 
