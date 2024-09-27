@@ -49,7 +49,7 @@ const strokes = calculateStrokes(player1, player2, holes);
 console.log(strokes);
 
 const Handicap = () => {
-	return <p>{strokes.toString()}</p>;
+	return <p>{JSON.stringify(strokes)}</p>;
 };
 
 export default Handicap;
