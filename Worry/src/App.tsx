@@ -7,6 +7,7 @@ import About from "./pages/About";
 import AddWorry from "./pages/worry/AddWorry";
 import EditWorry from "./pages/worry/EditWorry";
 import ListCardLayout from "./pages/ListCardLayout";
+import Handicap from "./pages/Handicap";
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 				<Route path="/worry/edit/:id" Component={EditWorry}></Route>
 				<Route path="/authenticate" Component={Worries}></Route>
 				<Route path="/cards" Component={ListCardLayout}></Route>
+				<Route path="/handicap" Component={Handicap}></Route>
 			</Routes>
 			<Footer />
 		</BrowserRouter>
