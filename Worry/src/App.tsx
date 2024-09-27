@@ -6,6 +6,7 @@ import Worries from "./pages/worry/Worries";
 import About from "./pages/About";
 import AddWorry from "./pages/worry/AddWorry";
 import EditWorry from "./pages/worry/EditWorry";
+import ListCardLayout from "./pages/ListCardLayout";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 				<Route path="/add-worry" Component={AddWorry}></Route>
 				<Route path="/worry/edit/:id" Component={EditWorry}></Route>
 				<Route path="/authenticate" Component={Worries}></Route>
+				<Route path="/cards" Component={ListCardLayout}></Route>
 			</Routes>
 			<Footer />
 		</BrowserRouter>

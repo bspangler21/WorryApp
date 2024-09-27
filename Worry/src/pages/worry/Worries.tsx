@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import utilStyles from "../../styles/utilStyles.module.css";
-import { Worry } from "../../types/Worry";
+import { mockWorryList, Worry } from "../../types/Worry";
 
 import {
 	DefaultButton,
 	Dropdown,
 	FontIcon,
 	IDropdownOption,
-	ITheme,
-	ThemeProvider,
-	createTheme,
+	// ITheme,
+	// ThemeProvider,
+	// createTheme,
 	mergeStyleSets,
 	mergeStyles,
 } from "@fluentui/react";
@@ -17,10 +17,10 @@ import { useDeleteWorry, useFetchWorries } from "../../hooks/WorryHooks";
 import { useNavigate } from "react-router-dom";
 import { WorryTable } from "../../pageComponents/WorryTable";
 import { TableHeader } from "../../types/TableHeader";
-import { fluentPalette } from "../../util/fluentPalette";
+// import { fluentPalette } from "../../util/fluentPalette";
 import { saveAs } from "file-saver";
 
-const fluentTheme: ITheme = createTheme({ palette: fluentPalette });
+// const fluentTheme: ITheme = createTheme({ palette: fluentPalette });
 
 const classNames = mergeStyleSets({
 	regularCenterTableHeader: {
@@ -92,8 +92,8 @@ const Worries = () => {
 	useEffect(() => {
 		// setWorries(data ?? mockWorries);
 		// setWorriesToDisplay(data ?? mockWorries);
-		setWorries(data ?? []);
-		setWorriesToDisplay(data ?? []);
+		setWorries(data ?? mockWorryList);
+		setWorriesToDisplay(data ?? mockWorryList);
 	}, [data]);
 
 	const downloadWorries = () => {

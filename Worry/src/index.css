@@ -7,12 +7,13 @@
   /* background-color: #242424; */
   /* background-color: white; */
   /* background-color: rgba(0,0,0,0) ; */
-
+  box-sizing: border-box;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  
 }
 
 a {
