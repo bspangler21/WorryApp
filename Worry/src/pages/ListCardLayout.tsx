@@ -1,5 +1,5 @@
 import { mergeStyleSets } from "@fluentui/react";
-import { mockWorryList } from "../types/Worry";
+import { mockWorryList, Worry } from "../types/Worry";
 
 const worriesToDisplay: Worry[] = mockWorryList;
 
