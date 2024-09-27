@@ -22,6 +22,8 @@ const classNames = mergeStyleSets({
 	td: {
 		border: "1px solid black",
 		padding: "4px",
+		textAlign: "center", // Center horizontally
+		verticalAlign: "middle", // Center vertically
 	},
 	text: {
 		marginBottom: "20px",
