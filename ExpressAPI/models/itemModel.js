@@ -11,6 +11,16 @@ const ItemSchema = new mongoose.Schema({
 		required: true,
 		unique: false,
 	},
+	judgments: {
+		type: String,
+		required: true,
+		unique: false,
+	},
+	dateRecorded: {
+		type: Date,
+		required: true,
+		unique: false,
+	},
 });
 
 module.exports = mongoose.model.Items || mongoose.model("Items", ItemSchema);
