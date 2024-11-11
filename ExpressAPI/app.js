@@ -115,4 +115,17 @@ app.get("/auth-endpoint", auth, (request, response) => {
 	response.json({ message: "Authorized access only" });
 });
 
+app.get("/items", auth, (request, response) => {
+	Item.find()
+		.then((items) => {
+			response.status(200).json(items);
+		})
+		.catch((error) => {
+			response.status(500).send({
+				message: "Could not fetch items",
+				error,
+			});
+		});
+});
+
 module.exports = app;
